@@ -1,0 +1,36 @@
+{
+  "name": "backend_ecommerce_mern",
+  "version": "1.0.0",
+  "description": "mern shop app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelusNL/MERN_eCommerce.git"
+  },
+  "author": "Mike Ruigrok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichaelusNL/MERN_eCommerce/issues"
+  },
+  "homepage": "https://github.com/MichaelusNL/MERN_eCommerce#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.12.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0"
+  }
+}
