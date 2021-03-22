@@ -1,3 +1,8 @@
 # MERN_eCommerce
 
-This project will be for a candle shop selling scented soy candles.
+This will be an eCommerce website job made for selling soy candles of the brand "Blessed Soy Candles". The website will be built with the MERN stack: MongoDB, Express, React.js and Node.js. Notable functionalities:
+
+- Will contain payment through paypal or stripe (up for debate still)
+- Will have a mailing service for customers that opted for this with their e-mail. Within the admin board or upon addition of new products this will trigger.
+- Admin board will be used for addition of products, to change stock and to delete items.
+- Shopping cart will work as well for non-logged in users, until they want to check-out.
