@@ -16,11 +16,15 @@ import productRoutes from './routes/productRoutes.js'
 // import middleware for error handling
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
+import userRoutes from './routes/userRoutes.js'
+
 // Enable dotenv config for the dotenv variables like PORT and MONGO URI
 dotenv.config()
 
 // Create app variable for express functions
 const app = express()
+
+app.use(express.json())
 
 connectDB()
 
@@ -31,6 +35,7 @@ app.get('/', (req, res) => {
 
 // The /api/products route logic
 app.use('/api/products', productRoutes)
+app.use('/api/users', userRoutes)
 
 app.use(notFound)
 

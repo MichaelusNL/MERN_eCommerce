@@ -9,7 +9,7 @@ This will be an eCommerce website job made for selling soy candles of the brand 
 
 Hosting:
 
-- Heroku, payment for domain name will be charged to client.
+- Heroku.
 
 Storage DB:
 
