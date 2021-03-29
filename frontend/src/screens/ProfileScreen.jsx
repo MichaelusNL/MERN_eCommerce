@@ -20,7 +20,6 @@ const ProfileScreen = ({ location, history }) => {
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success } = userUpdateProfile
-  console.log(userUpdateProfile)
   const { loading, error, user } = userDetails
 
   useEffect(() => {

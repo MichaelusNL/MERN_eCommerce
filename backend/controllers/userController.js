@@ -20,7 +20,6 @@ const authUser = asyncHandler(async (req, res) => {
     res.status(401)
     throw new Error('Invalid email or password')
   }
-  res.send({ email, password })
 })
 
 // @desc Register a new user
@@ -52,7 +51,6 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route GET /api/users/profile
 // @access private
 const getUserProfile = asyncHandler(async (req, res) => {
-  console.log('hey')
   const user = await User.findById(req.user._id)
   if (user) {
     res.json({

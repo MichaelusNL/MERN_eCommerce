@@ -17,6 +17,7 @@ import productRoutes from './routes/productRoutes.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 // Enable dotenv config for the dotenv variables like PORT and MONGO URI
 dotenv.config()
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 // The /api/products route logic
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/orders', orderRoutes)
 
 app.use(notFound)
 
