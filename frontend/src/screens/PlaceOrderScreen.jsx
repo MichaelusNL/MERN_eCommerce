@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { Link } from 'react-router-dom'
-import { createOrder } from '../actions/orderActions'
+import { createOrder, getOrderDetails } from '../actions/orderActions'
+import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -28,13 +29,6 @@ const PlaceOrderScreen = ({ history }) => {
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
 
-  useEffect(() => {
-    if (success) {
-      history.push(`/order/${order._id}`)
-    }
-    // eslint-disable-next-line
-  }, [history, success])
-
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -48,6 +42,15 @@ const PlaceOrderScreen = ({ history }) => {
       })
     )
   }
+
+  useEffect(() => {
+    if (success) {
+      dispatch({ type: ORDER_CREATE_RESET }) // reset order create
+      history.push(`/order/${order._id}`)
+    }
+    // eslint-disable-next-line
+  }, [history, success])
+
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
@@ -93,7 +96,8 @@ const PlaceOrderScreen = ({ history }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x ${item.price} = $
+                          {(item.qty * item.price).toFixed(2)}
                         </Col>
                       </Row>
                     </ListGroup.Item>
