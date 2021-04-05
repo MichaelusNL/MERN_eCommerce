@@ -1,3 +1,5 @@
+import path from 'path'
+
 // import environmental variables
 import dotenv from 'dotenv'
 
@@ -18,6 +20,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 // Enable dotenv config for the dotenv variables like PORT and MONGO URI
 dotenv.config()
@@ -38,10 +41,15 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
+
+const __dirname = path.resolve()
+
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 app.use(notFound)
 

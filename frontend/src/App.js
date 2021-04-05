@@ -13,8 +13,11 @@ import ShippingScreen from './screens/ShippingScreen'
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
-import userListScreen from './screens/UserListScreen'
-import userEditScreen from './screens/UserEditScreen'
+import UserListScreen from './screens/UserListScreen'
+import UserEditScreen from './screens/UserEditScreen'
+import ProductListScreen from './screens/ProductListScreen'
+import ProductEditScreen from './screens/ProductEditScreen'
+import OrderListScreen from './screens/OrderListScreen'
 
 function App() {
   return (
@@ -32,8 +35,19 @@ function App() {
           <Route path='/shipping' component={ShippingScreen} />
           <Route path='/payment' component={PaymentScreen} />
           <Route path='/placeorder' component={PlaceOrderScreen} exact />
-          <Route path='/admin/userlist' component={userListScreen} exact />
-          <Route path='/admin/user/:id/edit' component={userEditScreen} exact />
+          <Route path='/admin/userlist' component={UserListScreen} exact />
+          <Route path='/admin/user/:id/edit' component={UserEditScreen} exact />
+          <Route
+            path='/admin/productlist'
+            component={ProductListScreen}
+            exact
+          />
+          <Route path='/admin/orderlist' component={OrderListScreen} exact />
+          <Route
+            path='/admin/product/:id/edit'
+            component={ProductEditScreen}
+            exact
+          />
         </Container>
       </main>
       <Footer />
