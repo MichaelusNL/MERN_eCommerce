@@ -23,6 +23,10 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  USER_REGISTER_RESET,
+  USER_MAILER_REQUEST,
+  USER_MAILER_SUCCESS,
+  USER_MAILER_FAIL,
 } from '../constants/userConstants'
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
@@ -62,9 +66,12 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET })
   dispatch({ type: ORDER_LIST_MY_RESET })
   dispatch({ type: USER_LIST_RESET })
+  dispatch({ type: USER_REGISTER_RESET })
 }
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (name, email, password, onMailList) => async (
+  dispatch
+) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST })
 
@@ -74,7 +81,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       '/api/users',
-      { name, email, password },
+      { name, email, password, onMailList },
       config
     )
 
@@ -223,6 +230,29 @@ export const updateUser = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const mailer = (message, subject, userInfo) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_MAILER_REQUEST })
+
+    const config = {
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    await axios.post('/api/users/mailer', { message, subject }, config)
+    dispatch({ type: USER_MAILER_SUCCESS })
+  } catch (error) {
+    dispatch({
+      type: USER_MAILER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

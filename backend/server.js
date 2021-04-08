@@ -1,5 +1,7 @@
 import path from 'path'
 
+import morgan from 'morgan'
+
 // import environmental variables
 import dotenv from 'dotenv'
 
@@ -27,6 +29,10 @@ dotenv.config()
 
 // Create app variable for express functions
 const app = express()
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 
 app.use(express.json())
 

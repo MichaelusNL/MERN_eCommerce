@@ -8,6 +8,7 @@ import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
 
 const RegisterScreen = ({ location, history }) => {
+  const [onMailList, setOnMailList] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,9 +18,10 @@ const RegisterScreen = ({ location, history }) => {
   const dispatch = useDispatch()
 
   const userRegister = useSelector((state) => state.userRegister)
-  const { loading, error, userInfo } = userRegister
+  const { loading, error } = userRegister
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
   const redirect = location.search ? location.search.split('=')[1] : '/'
-
   useEffect(() => {
     if (userInfo) {
       history.push(redirect)
@@ -31,7 +33,7 @@ const RegisterScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(register(name, email, password))
+      dispatch(register(name, email, password, onMailList))
     }
   }
 
@@ -81,6 +83,15 @@ const RegisterScreen = ({ location, history }) => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='onMailList'>
+          <Form.Check
+            type='checkbox'
+            label='Sign up for mail'
+            checked={onMailList}
+            onChange={(e) => setOnMailList(e.target.checked)}
+          ></Form.Check>
         </Form.Group>
 
         <Button type='submit' variant='primary'>

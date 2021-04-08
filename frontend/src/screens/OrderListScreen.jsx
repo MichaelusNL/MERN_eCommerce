@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listOrders } from '../actions/orderActions'
+import { listOrders, deleteOrder } from '../actions/orderActions'
 
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -14,13 +14,24 @@ const OrderListScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const orderRemove = useSelector((state) => state.orderRemove)
+  const {
+    error: orderRemoveError,
+    success: orderRemoveSuccess,
+    loading: orderRemoveLoading,
+  } = orderRemove
+
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders())
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo])
+  }, [dispatch, history, userInfo, orderRemoveSuccess])
+
+  const clickHandler = (orderId) => {
+    dispatch(deleteOrder(orderId))
+  }
 
   return (
     <>
@@ -68,6 +79,18 @@ const OrderListScreen = ({ history }) => {
                       Details
                     </Button>
                   </LinkContainer>
+
+                  {orderRemoveLoading && <Loader />}
+                  {orderRemoveError && (
+                    <Message variant='danger'>{orderRemoveError}</Message>
+                  )}
+                  <Button
+                    variant='danger'
+                    className='btn-sm'
+                    onClick={() => clickHandler(order._id)}
+                  >
+                    <i className='fas fa-trash'></i>
+                  </Button>
                 </td>
               </tr>
             ))}

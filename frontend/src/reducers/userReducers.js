@@ -24,6 +24,12 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
+  USER_UPDATE_PROFILE_RESET,
+  USER_REGISTER_RESET,
+  USER_MAILER_FAIL,
+  USER_MAILER_REQUEST,
+  USER_MAILER_RESET,
+  USER_MAILER_SUCCESS,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -53,6 +59,10 @@ export const userRegisterReducer = (state = {}, action) => {
 
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload }
+
+    case USER_REGISTER_RESET:
+      return {}
+
     default:
       return state
   }
@@ -85,6 +95,9 @@ export const userUpdateProfileReducer = (state = {}, action) => {
 
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload }
+
+    case USER_UPDATE_PROFILE_RESET:
+      return {}
     default:
       return state
   }
@@ -135,6 +148,25 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
       return { loading: false, error: action.payload }
     case USER_UPDATE_RESET:
       return { user: {} }
+    default:
+      return state
+  }
+}
+
+export const userMailerReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_MAILER_REQUEST:
+      return { loading: true }
+
+    case USER_MAILER_SUCCESS:
+      return { loading: false, success: true }
+
+    case USER_MAILER_FAIL:
+      return { loading: false, error: action.payload }
+
+    case USER_MAILER_RESET:
+      return {}
+
     default:
       return state
   }

@@ -6,8 +6,10 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ location, history }) => {
+  const [onMailList, setOnMailList] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -27,27 +29,31 @@ const ProfileScreen = ({ location, history }) => {
 
   const { success } = userUpdateProfile
   const { loading, error, user } = userDetails
-
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
-      } else {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
+      }
+      if (loading === false && !success) {
         setName(user.name)
         setEmail(user.email)
+        setOnMailList(user.onMailList)
       }
     }
-  }, [dispatch, history, userInfo, user])
+  }, [dispatch, history, userInfo, user, success, loading])
 
   const submitHandler = (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }))
+      dispatch(
+        updateUserProfile({ id: user._id, name, email, password, onMailList })
+      )
     }
   }
 
@@ -56,7 +62,6 @@ const ProfileScreen = ({ location, history }) => {
       <Col md={3}>
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
 
@@ -101,13 +106,22 @@ const ProfileScreen = ({ location, history }) => {
             ></Form.Control>
           </Form.Group>
 
+          <Form.Group controlId='onMailList'>
+            <Form.Check
+              type='checkbox'
+              label='Sign up for mail'
+              checked={onMailList}
+              onChange={(e) => setOnMailList(e.target.checked)}
+            ></Form.Check>
+          </Form.Group>
+
           <Button type='submit' variant='primary'>
             Update
           </Button>
         </Form>
       </Col>
       <Col md={9}>
-        <h2>My Order</h2>
+        <h2>My Orders</h2>
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (

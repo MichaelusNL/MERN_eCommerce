@@ -9,6 +9,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+  userMailer,
 } from '../controllers/userController.js'
 import { protect, isAdmin } from '../middleware/authMiddleware.js'
 
@@ -18,6 +19,7 @@ router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile)
+router.route('/mailer').post(protect, isAdmin, userMailer)
 router
   .route('/:id')
   .delete(protect, isAdmin, deleteUser)
