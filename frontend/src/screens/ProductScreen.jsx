@@ -47,20 +47,13 @@ const ProductScreen = ({ history, match }) => {
       setComment('')
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-    if (errorProductReview) {
-      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
-    }
     dispatch({ type: PRODUCT_DETAILS_RESET })
     dispatch(listProductDetails(match.params.id))
-  }, [
-    dispatch,
-    match,
-    successProductReview,
-    history,
-    productId,
-    successDeleteReview,
-    errorProductReview,
-  ])
+  }, [dispatch, match, successProductReview, history, successDeleteReview])
+
+  useEffect(() => {
+    dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+  }, [productId, dispatch])
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)

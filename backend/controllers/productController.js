@@ -187,13 +187,11 @@ const deleteProductReview = asyncHandler(async (req, res) => {
     ) {
       await review.remove()
       product.numReviews = product.reviews.length
-      console.log(product.reviews ? 'exists' : 'doesnt')
       product.reviews.length > 0
         ? (product.rating =
             product.reviews.reduce((acc, item) => item.rating + acc, 0) /
             product.reviews.length)
         : (product.rating = 0)
-      console.log(product.reviews, product.rating, product.reviews.length)
       await product.save()
       res.json({ message: 'Review is removed', product })
     } else {
