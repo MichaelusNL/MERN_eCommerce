@@ -49,9 +49,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
   if (product) {
     if (!product.image.includes('sample.jpg')) {
-      fs.unlink(path.join(__dirname + product.image), (err) => {
-        if (err) throw new Error('The image can not be removed')
-      })
+      try {
+        fs.unlink(path.join(__dirname + product.image), (err) => {
+          if (err) console.log('there is no local image to remove')
+        })
+      } catch (err) {
+        console.error(err)
+      }
     }
     await product.remove()
     res.json({ message: 'Product removed' })
@@ -99,8 +103,6 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.name = name
     product.price = price
     product.description = description
-    console.log(product.image)
-    console.log(image)
     if (product.image === image || product.image.includes('sample.jpg')) {
       product.image = image
     } else {
