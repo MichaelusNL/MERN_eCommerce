@@ -47,8 +47,8 @@ h2 {
 .carousel a {
   display: flex;
 }
-@media (max-width: 950px) {
+@media (max-width: 750px) {
   .carousel-caption h2 {
-    font-size: 2.5vw;
+    font-size: 4vw;
   }
 }
