@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
+import { Row, Col, Image } from 'react-bootstrap'
 
 const AboutScreen = () => {
   return (
@@ -16,10 +16,10 @@ const AboutScreen = () => {
         unnatural additives and is also VEGAN and KOSHER.
       </p>
       <Row className='m-5'>
-        <Col xs={6} md={4} className='mx-5'>
+        <Col xs={6} md={4} className='mx-5 my-3'>
           <Image src='/images/elipic.jpg' roundedCircle fluid />
         </Col>
-        <Col xs={6} md={4} className='mx-5'>
+        <Col xs={6} md={4} className='mx-5 my-3'>
           <Image src='/images/addpp.jpg' roundedCircle fluid />
         </Col>
       </Row>
