@@ -38,8 +38,8 @@ h2 {
 .carousel img {
   height: 300px;
   padding: 30px;
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin-top: 7.5%;
+  margin-bottom: 4%;
   border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -47,8 +47,8 @@ h2 {
 .carousel a {
   display: flex;
 }
-/* @media (max-width: 900px) {
+@media (max-width: 950px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
   }
-} */
+}

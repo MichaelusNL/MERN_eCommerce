@@ -25,12 +25,17 @@ const Header = () => {
       >
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>Tech Shop</Navbar.Brand>
+            <Navbar.Brand>Blessed Soy Candles</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className='ml-auto'>
+              <LinkContainer to='/about'>
+                <Nav.Link>
+                  <i class='far fa-address-card'></i>About
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i>
