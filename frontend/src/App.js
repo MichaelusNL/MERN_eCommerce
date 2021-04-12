@@ -24,7 +24,7 @@ import AboutScreen from './screens/AboutScreen'
 function App() {
   return (
     <Router>
-      <Header />
+      <Route render={({ history }) => <Header history={history} />} />
       <main className='py-3'>
         <Container>
           <Route path='/order/:id' component={OrderScreen} exact />

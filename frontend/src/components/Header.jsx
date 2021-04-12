@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
@@ -6,13 +6,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import SearchBox from './SearchBox'
 import { logout } from '../actions/userActions'
 
-const Header = () => {
+const Header = ({ history }) => {
+  const location = history.location.pathname
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const logoutHandler = () => {
     dispatch(logout())
   }
+
+  useEffect(() => {
+    const activeMenu = document.body.querySelector('.nav-link.active') || false
+    if (
+      (activeMenu && location.includes('/search')) ||
+      (location === '/' && activeMenu)
+    ) {
+      document.body.querySelector('.nav-link.active').classList.remove('active')
+    }
+  }, [location])
 
   return (
     <header>
@@ -33,7 +44,7 @@ const Header = () => {
             <Nav className='ml-auto'>
               <LinkContainer to='/about'>
                 <Nav.Link>
-                  <i class='far fa-address-card'></i>About
+                  <i className='far fa-address-card'></i>About
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/cart'>
